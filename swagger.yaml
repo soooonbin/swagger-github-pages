@@ -1,28 +1,28 @@
 ---
 openapi: 3.0.1
 info:
-  title: Moyeo API
-  description: API 설명
-  version: 1.0.0
+  title: 모여 프로젝트 API 명세서
+  description: Moyeo 프로젝트에 사용되는 API 명세서
+  version: v1
 servers:
 - url: http://localhost:8080
   description: Generated server url
 tags:
-- name: 梨꾪똿諛� API
-  description: 梨꾪똿諛� 愿��� API
+- name: Moyeo ChatRoom API
+  description: 모여 채팅방 API
 paths:
-  "/v1/api":
+  "/v1/api/chatRoom":
     post:
       tags:
-      - 梨꾪똿諛� API
-      summary: 梨꾪똿諛� �앹꽦
-      description: "�ъ슜�먭� �낅젰�� �뺣낫濡� 梨꾪똿諛⑹쓣 �앹꽦�쒕떎."
+      - Moyeo ChatRoom API
+      summary: 채팅방 생성
+      description: 채팅방을 생성합니다.
       operationId: createChatRoom
       requestBody:
         content:
           application/json;charset=UTF-8:
             schema:
-              "$ref": "#/components/schemas/ChatRoomDTO"
+              "$ref": "#/components/schemas/ChatRoomCreateRequest"
         required: true
       responses:
         '200':
@@ -30,13 +30,13 @@ paths:
           content:
             application/json;charset=UTF-8:
               schema:
-                type: string
-  "/v1/api/api/chatRoom/{id}":
+                "$ref": "#/components/schemas/ApiResponseResultChatRoomCreateResponse"
+  "/v1/api/chatRoom/{id}":
     get:
       tags:
-      - 梨꾪똿諛� API
-      summary: 梨꾪똿諛� �뺣낫
-      description: 梨꾪똿諛� ID濡� 梨꾪똿諛� �뺣낫 媛��몄삤湲�
+      - Moyeo ChatRoom API
+      summary: 채팅방 정보
+      description: 채팅방 ID로 채팅방 정보 가져오기
       operationId: getChatRoom
       parameters:
       - name: id
@@ -46,12 +46,12 @@ paths:
           type: integer
           format: int64
       responses:
-        '200':
-          description: OK
+        default:
+          description: default response
           content:
             application/json;charset=UTF-8:
               schema:
-                "$ref": "#/components/schemas/ChatRoomDTO"
+                "$ref": "#/components/schemas/ApiResponseResultChatRoomDetailResponse"
   "/api/test":
     get:
       tags:
@@ -78,31 +78,102 @@ paths:
                 type: string
 components:
   schemas:
-    ChatRoomDTO:
+    ChatRoomCreateRequest:
       type: object
       properties:
-        id:
+        chatRoomName:
+          type: string
+          description: 채팅방 이름
+          example: 모여방
+        chatRoomType:
+          type: string
+          description: 채팅방 타입
+          example: '1'
+        chatRoomQNum:
+          type: string
+          description: 채팅방 질문 개수
+          example: '10'
+        chatRoomPassword:
+          type: string
+          description: 채팅방 비밀번호
+          example: "[딸기, 망고, 바나나]"
+    ApiResponseResultChatRoomCreateResponse:
+      type: object
+      properties:
+        response:
+          "$ref": "#/components/schemas/CommonResponseChatRoomCreateResponse"
+    ChatRoomCreateResponse:
+      type: object
+      properties:
+        chatRoomId:
           type: integer
-          description: 梨꾪똿諛� ID
+          format: int64
+    CommonResponseChatRoomCreateResponse:
+      type: object
+      properties:
+        statusMessage:
+          type: string
+        resultData:
+          "$ref": "#/components/schemas/ChatRoomCreateResponse"
+    ApiResponseResultChatRoomDetailResponse:
+      type: object
+      properties:
+        response:
+          "$ref": "#/components/schemas/CommonResponseChatRoomDetailResponse"
+    ChatRoomDetailResponse:
+      type: object
+      properties:
+        roomId:
+          type: integer
+          description: 채팅방 Id
           format: int64
           example: 1
         chatRoomName:
           type: string
-          description: 梨꾪똿諛� �대쫫
-          example: 紐⑥뿬��
-        chatRoomType:
-          type: integer
-          description: '梨꾪똿諛� ���� (��: 0: �쇱옄, 1: 移쒓뎄)'
-          format: int32
-          example: 1
+          description: 채팅방 이름
+          example: 모여방
         chatRoomQnum:
-          type: integer
-          description: 吏덈Ц 媛쒖닔
-          format: int32
-          example: 5
+          type: string
+          description: 채팅방 질문 개수
+          example: '10'
+        maxPeople:
+          type: string
+          description: 최대 참여 인원
+          example: '5'
         numPeople:
+          type: string
+          description: 현재 참여 인원
+          example: '1'
+        patricipants:
+          type: array
+          description: 멤버 정보
+          items:
+            "$ref": "#/components/schemas/MemberInfoDTO"
+    CommonResponseChatRoomDetailResponse:
+      type: object
+      properties:
+        statusMessage:
+          type: string
+        resultData:
+          "$ref": "#/components/schemas/ChatRoomDetailResponse"
+    MemberInfoDTO:
+      type: object
+      properties:
+        userId:
           type: integer
-          description: "�꾩옱 李몄뿬 �몄썝"
+          description: 사용자ID
           format: int32
           example: 1
-      description: 梨꾪똿諛� �뺣낫 DTO
+        userName:
+          type: string
+          description: 사용자 닉네임
+          example: User01
+        userIcon:
+          type: string
+          description: 사용자 프로필
+          example: '1'
+        userNum:
+          type: string
+          description: 참여순서
+          example: '1'
+      description: 멤버 정보
