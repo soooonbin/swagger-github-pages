@@ -1,12 +1,12 @@
 ---
 openapi: 3.0.1
 info:
-  title: 모여 프로젝트 API 명세서
-  description: Moyeo 프로젝트에 사용되는 API 명세서
-  version: v1
+  title: 모여 API
+  description: moyeo API
+  version: 1.0.0
 servers:
-- url: http://localhost:8080
-  description: Generated server url
+- url: "/"
+  description: Default Server url
 tags:
 - name: Moyeo ChatRoom API
   description: 모여 채팅방 API
