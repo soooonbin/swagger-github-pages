@@ -1,155 +1,228 @@
----
-openapi: 3.0.1
-info:
-  title: 모여 API
-  description: moyeo API
-  version: 1.0.0
-servers:
-- url: "/"
-  description: Default Server url
-tags:
-- name: Moyeo ChatRoom API
-  description: 모여 채팅방 API
-paths:
-  "/api/chatRoom/":
-    post:
-      tags:
-      - Moyeo ChatRoom API
-      summary: 채팅방 생성
-      description: 채팅방을 생성합니다.
-      operationId: createChatRoom
-      requestBody:
-        content:
-          application/json;charset=UTF-8:
-            schema:
-              "$ref": "#/components/schemas/ChatRoomCreateRequest"
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json;charset=UTF-8:
-              schema:
-                "$ref": "#/components/schemas/ApiResponseResultChatRoomCreateResponse"
-  "/api/chatRoom/{id}":
-    get:
-      tags:
-      - Moyeo ChatRoom API
-      summary: 채팅방 정보
-      description: 채팅방 ID로 채팅방 정보 가져오기
-      operationId: getChatRoom
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json;charset=UTF-8:
-              schema:
-                "$ref": "#/components/schemas/ApiResponseResultChatRoomDetailResponse"
-components:
-  schemas:
-    ChatRoomCreateRequest:
-      type: object
-      properties:
-        chatRoomName:
-          type: string
-          description: 채팅방 이름
-          example: 모여방
-        chatRoomType:
-          type: string
-          description: 채팅방 타입
-          example: '1'
-        chatRoomQNum:
-          type: string
-          description: 채팅방 질문 개수
-          example: '10'
-        chatRoomPassword:
-          type: string
-          description: 채팅방 비밀번호
-          example: "[딸기, 망고, 바나나]"
-    ApiResponseResultChatRoomCreateResponse:
-      type: object
-      properties:
-        response:
-          "$ref": "#/components/schemas/CommonResponseChatRoomCreateResponse"
-    ChatRoomCreateResponse:
-      type: object
-      properties:
-        chatRoomId:
-          type: integer
-          format: int64
-    CommonResponseChatRoomCreateResponse:
-      type: object
-      properties:
-        statusMessage:
-          type: string
-        resultData:
-          "$ref": "#/components/schemas/ChatRoomCreateResponse"
-    ApiResponseResultChatRoomDetailResponse:
-      type: object
-      properties:
-        response:
-          "$ref": "#/components/schemas/CommonResponseChatRoomDetailResponse"
-    ChatRoomDetailResponse:
-      type: object
-      properties:
-        roomId:
-          type: integer
-          description: 채팅방 Id
-          format: int64
-          example: 1
-        chatRoomName:
-          type: string
-          description: 채팅방 이름
-          example: 모여방
-        chatRoomQnum:
-          type: string
-          description: 채팅방 질문 개수
-          example: '10'
-        maxPeople:
-          type: string
-          description: 최대 참여 인원
-          example: '5'
-        numPeople:
-          type: string
-          description: 현재 참여 인원
-          example: '1'
-        patricipants:
-          type: array
-          description: 멤버 정보
-          items:
-            "$ref": "#/components/schemas/MemberInfoDTO"
-    CommonResponseChatRoomDetailResponse:
-      type: object
-      properties:
-        statusMessage:
-          type: string
-        resultData:
-          "$ref": "#/components/schemas/ChatRoomDetailResponse"
-    MemberInfoDTO:
-      type: object
-      properties:
-        userId:
-          type: integer
-          description: 사용자ID
-          format: int32
-          example: 1
-        userName:
-          type: string
-          description: 사용자 닉네임
-          example: User01
-        userIcon:
-          type: string
-          description: 사용자 프로필
-          example: '1'
-        userNum:
-          type: string
-          description: 참여순서
-          example: '1'
-      description: 멤버 정보
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "모여 API",
+    "description": "moyeo API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "Default Server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Moyeo ChatRoom API",
+      "description": "모여 채팅방 API"
+    }
+  ],
+  "paths": {
+    "/api/chatRoom/": {
+      "post": {
+        "tags": [
+          "Moyeo ChatRoom API"
+        ],
+        "summary": "채팅방 생성",
+        "description": "채팅방을 생성합니다.",
+        "operationId": "createChatRoom",
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRoomCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseResultChatRoomCreateResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chatRoom/{id}": {
+      "get": {
+        "tags": [
+          "Moyeo ChatRoom API"
+        ],
+        "summary": "채팅방 정보",
+        "description": "채팅방 ID로 채팅방 정보 가져오기",
+        "operationId": "getChatRoom",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseResultChatRoomDetailResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ChatRoomCreateRequest": {
+        "type": "object",
+        "properties": {
+          "chatRoomName": {
+            "type": "string",
+            "description": "채팅방 이름",
+            "example": "모여방"
+          },
+          "chatRoomType": {
+            "type": "string",
+            "description": "채팅방 타입",
+            "example": "1"
+          },
+          "chatRoomQNum": {
+            "type": "string",
+            "description": "채팅방 질문 개수",
+            "example": "10"
+          },
+          "chatRoomPassword": {
+            "type": "string",
+            "description": "채팅방 비밀번호",
+            "example": "[딸기, 망고, 바나나]"
+          }
+        }
+      },
+      "ApiResponseResultChatRoomCreateResponse": {
+        "type": "object",
+        "properties": {
+          "response": {
+            "$ref": "#/components/schemas/CommonResponseChatRoomCreateResponse"
+          }
+        }
+      },
+      "ChatRoomCreateResponse": {
+        "type": "object",
+        "properties": {
+          "chatRoomId": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "CommonResponseChatRoomCreateResponse": {
+        "type": "object",
+        "properties": {
+          "statusMessage": {
+            "type": "string"
+          },
+          "resultData": {
+            "$ref": "#/components/schemas/ChatRoomCreateResponse"
+          }
+        }
+      },
+      "ApiResponseResultChatRoomDetailResponse": {
+        "type": "object",
+        "properties": {
+          "response": {
+            "$ref": "#/components/schemas/CommonResponseChatRoomDetailResponse"
+          }
+        }
+      },
+      "ChatRoomDetailResponse": {
+        "type": "object",
+        "properties": {
+          "roomId": {
+            "type": "integer",
+            "description": "채팅방 Id",
+            "format": "int64",
+            "example": 1
+          },
+          "chatRoomName": {
+            "type": "string",
+            "description": "채팅방 이름",
+            "example": "모여방"
+          },
+          "chatRoomQnum": {
+            "type": "string",
+            "description": "채팅방 질문 개수",
+            "example": "10"
+          },
+          "maxPeople": {
+            "type": "string",
+            "description": "최대 참여 인원",
+            "example": "5"
+          },
+          "numPeople": {
+            "type": "string",
+            "description": "현재 참여 인원",
+            "example": "1"
+          },
+          "patricipants": {
+            "type": "array",
+            "description": "멤버 정보",
+            "items": {
+              "$ref": "#/components/schemas/MemberInfoDTO"
+            }
+          }
+        }
+      },
+      "CommonResponseChatRoomDetailResponse": {
+        "type": "object",
+        "properties": {
+          "statusMessage": {
+            "type": "string"
+          },
+          "resultData": {
+            "$ref": "#/components/schemas/ChatRoomDetailResponse"
+          }
+        }
+      },
+      "MemberInfoDTO": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "description": "사용자ID",
+            "format": "int32",
+            "example": 1
+          },
+          "userName": {
+            "type": "string",
+            "description": "사용자 닉네임",
+            "example": "User01"
+          },
+          "userIcon": {
+            "type": "string",
+            "description": "사용자 프로필",
+            "example": "1"
+          },
+          "userNum": {
+            "type": "string",
+            "description": "참여순서",
+            "example": "1"
+          }
+        },
+        "description": "멤버 정보"
+      }
+    }
+  }
+}
