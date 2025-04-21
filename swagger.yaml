@@ -11,7 +11,7 @@ tags:
 - name: Moyeo ChatRoom API
   description: 모여 채팅방 API
 paths:
-  "/api/chatRoom":
+  "/api/chatRoom/":
     post:
       tags:
       - Moyeo ChatRoom API
@@ -31,30 +31,6 @@ paths:
             application/json;charset=UTF-8:
               schema:
                 "$ref": "#/components/schemas/ApiResponseResultChatRoomCreateResponse"
-  "/api/test":
-    get:
-      tags:
-      - hello-controller
-      operationId: test
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json;charset=UTF-8:
-              schema:
-                type: string
-  "/api/hello":
-    get:
-      tags:
-      - hello-controller
-      operationId: hello
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json;charset=UTF-8:
-              schema:
-                type: string
   "/api/chatRoom/{id}":
     get:
       tags:
