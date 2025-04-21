@@ -11,7 +11,7 @@ tags:
 - name: Moyeo ChatRoom API
   description: 모여 채팅방 API
 paths:
-  "/v1/api/chatRoom":
+  "/api/chatRoom":
     post:
       tags:
       - Moyeo ChatRoom API
@@ -31,27 +31,6 @@ paths:
             application/json;charset=UTF-8:
               schema:
                 "$ref": "#/components/schemas/ApiResponseResultChatRoomCreateResponse"
-  "/v1/api/chatRoom/{id}":
-    get:
-      tags:
-      - Moyeo ChatRoom API
-      summary: 채팅방 정보
-      description: 채팅방 ID로 채팅방 정보 가져오기
-      operationId: getChatRoom
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-      responses:
-        default:
-          description: default response
-          content:
-            application/json;charset=UTF-8:
-              schema:
-                "$ref": "#/components/schemas/ApiResponseResultChatRoomDetailResponse"
   "/api/test":
     get:
       tags:
@@ -76,6 +55,27 @@ paths:
             application/json;charset=UTF-8:
               schema:
                 type: string
+  "/api/chatRoom/{id}":
+    get:
+      tags:
+      - Moyeo ChatRoom API
+      summary: 채팅방 정보
+      description: 채팅방 ID로 채팅방 정보 가져오기
+      operationId: getChatRoom
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseResultChatRoomDetailResponse"
 components:
   schemas:
     ChatRoomCreateRequest:
